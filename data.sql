@@ -19,3 +19,23 @@ INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) 
 
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) VALUES ('Blossom', '1998-10-13', 3, '1', 17);
 
+BEGIN TRANSACTION;
+UPDATE animals SET species = 'unspecified';
+ROLLBACK;
+
+BEGIN TRANSACTION;
+UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
+UPDATE animals SET species = 'pokemon' WHERE species = '';
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+DELETE FROM animals;
+ROLLBACK;
+
+BEGIN TRANSACTION;
+DELETE FROM animals WHERE date_of_birth > CAST('2022-01-01' AS DATE);
+SAVEPOINT SP1;
+UPDATE animals SET weight_kg = weight_kg * -1;
+ROLLBACK TO SP1;
+UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
+COMMIT;
