@@ -21,12 +21,11 @@ INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) 
 
 BEGIN TRANSACTION;
 UPDATE animals SET species = 'unspecified';
-UPDATE animals SET species = NULL;
 ROLLBACK;
 
 BEGIN TRANSACTION;
-UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon'; --id -> 2
-UPDATE animals SET species = 'pokemon' WHERE name NOT LIKE '%mon'; -- id -> 1
+UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
+UPDATE animals SET species = 'pokemon' WHERE species = '';
 COMMIT TRANSACTION;
 
 BEGIN TRANSACTION;
@@ -58,7 +57,7 @@ INSERT INTO species (name) VALUES ('Digimon');
 -- Modify inserted animals so it includes the species_id value:
 
 BEGIN TRANSACTION;
-UPDATE animals SET species_id = 2 WHERE name LIKE '%mon'; 
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
 UPDATE animals SET species_id = 1 WHERE name NOT LIKE '%mon';
 COMMIT TRANSACTION;
 
@@ -70,38 +69,3 @@ UPDATE animals SET owner_id = 3 WHERE name ='Devimon' OR name ='Plantmon';
 UPDATE animals SET owner_id = 4 WHERE name ='Charmander' OR name = 'Squirtle' OR name ='Blossom';
 UPDATE animals SET owner_id = 5 WHERE name ='Angemon' OR name='Boarmon';
 COMMIT TRANSACTION;
-
--- insert the data in vets table:
-INSERT INTO vets (name, age, date_of_graduation) VALUES ('William Tatcher', 45, '2000-04-03');
-INSERT INTO vets (name, age, date_of_graduation) VALUES ('Maisy Smith', 26, '2019-01-17');
-INSERT INTO vets (name, age, date_of_graduation) VALUES ('Stephanie Mendez', 64, '1981-05-04');
-INSERT INTO vets (name, age, date_of_graduation) VALUES ('Jack Harkness', 38, '2008-06-08');
-
--- insert the data in specializations table:
-INSERT INTO specializations (species_id, vet_id) VALUES (1,1);
-INSERT INTO specializations (species_id, vet_id) VALUES (2,3);
-INSERT INTO specializations (species_id, vet_id) VALUES (1,3);
-INSERT INTO specializations (species_id, vet_id) VALUES (2,4);
-
-
--- insert the data in visits table:
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-05-24', 1, 1);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-07-22', 3, 1);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2021-02-02', 4, 2);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-01-05', 2, 3);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-03-08', 2, 3);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-05-14', 2, 3);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2021-05-04', 3, 4);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2021-02-24', 4, 5);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2019-12-21', 2, 11);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-08-10', 1, 11);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2021-04-07', 2, 11);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2019-09-29', 3, 7);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-10-03', 4, 8);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-11-04', 4, 8);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2019-01-24', 2, 9);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2019-05-15', 2, 9);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-02-27', 2, 9);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-08-03', 2, 9);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-05-24', 3, 10);
-INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2021-01-11', 1, 10);
