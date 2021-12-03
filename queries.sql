@@ -75,3 +75,6 @@ SELECT COUNT(*) as wrong_speciality FROM visits INNER JOIN vets ON vets.id = vis
 
 -- What specialty should Maisy Smith consider getting? Look for the species she gets the most.
 SELECT vets.name, species.name, COUNT(*) AS most_gotten_specie FROM animals INNER JOIN visits on animals.id = visits.animal_id INNER JOIN vets on visits.vet_id = vets.id INNER JOIN species on species.id = animals.species_id WHERE vets.name = 'Maisy Smith' GROUP BY vets.name, species.name ORDER BY most_gotten_specie DESC limit 1;
+
+SELECT owners.full_name, COUNT(*) AS max_count FROM animals INNER JOIN owners on animals.owner_id = owners.id GROUP BY owners.full_name ORDER BY max_count DESC LIMIT 1;
+
