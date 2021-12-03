@@ -25,8 +25,8 @@ UPDATE animals SET species = NULL;
 ROLLBACK;
 
 BEGIN TRANSACTION;
-UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
-UPDATE animals SET species = 'pokemon' WHERE name NOT LIKE '%mon';
+UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon'; --id -> 2
+UPDATE animals SET species = 'pokemon' WHERE name NOT LIKE '%mon'; -- id -> 1
 COMMIT TRANSACTION;
 
 BEGIN TRANSACTION;
@@ -58,7 +58,7 @@ INSERT INTO species (name) VALUES ('Digimon');
 -- Modify inserted animals so it includes the species_id value:
 
 BEGIN TRANSACTION;
-UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon'; 
 UPDATE animals SET species_id = 1 WHERE name NOT LIKE '%mon';
 COMMIT TRANSACTION;
 
@@ -84,24 +84,6 @@ INSERT INTO specializations (species_id, vet_id) VALUES (1,3);
 INSERT INTO specializations (species_id, vet_id) VALUES (2,4);
 
 
-/* 
-
-
-Squirtle visited Stephanie Mendez on Sep 29th, 2019.
-Angemon visited Jack Harkness on Oct 3rd, 2020.
-Angemon visited Jack Harkness on Nov 4th, 2020.
-Boarmon visited Maisy Smith on Jan 24th, 2019.
-Boarmon visited Maisy Smith on May 15th, 2019.
-Boarmon visited Maisy Smith on Feb 27th, 2020.
-Boarmon visited Maisy Smith on Aug 3rd, 2020.
-Blossom visited Stephanie Mendez on May 24th, 2020.
-Blossom visited William Tatcher on Jan 11th, 2021.
-
-1 | William Tatcher  |  45 | 2000-04-03
-2 | Maisy Smith      |  26 | 2019-01-17
-3 | Stephanie Mendez |  64 | 1981-05-04
-4 | Jack Harkness 
- */
 -- insert the data in visits table:
 INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-05-24', 1, 1);
 INSERT INTO visits (visit_date, vet_id, animal_id) VALUES ('2020-07-22', 3, 1);
