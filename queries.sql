@@ -35,7 +35,7 @@ SELECT animals.id, animals.name, species.name FROM animals INNER JOIN species on
 SELECT owners.full_name, animals.name FROM owners LEFT JOIN animals on owners.id = animals.owner_id;
 
 -- How many animals are there per species?
-SELECT COUNT(animals.name), species.name FROM animals INNER JOIN species on animals.species_id = species.id WHERE species.name = 'Pokemon' or species.name = 'Digimon' GROUP BY species.name;
+EXPLAIN ANALYSE SELECT COUNT(animals.name), species.name FROM animals INNER JOIN species on animals.species_id = species.id WHERE species.name = 'Pokemon' or species.name = 'Digimon' GROUP BY species.name;
 
 -- List all Digimon owned by Jennifer Orwell.
 
@@ -46,3 +46,31 @@ SELECT animals.id, animals.name, owners.full_name FROM animals INNER JOIN owners
 
 -- Who owns the most animals?
 SELECT owners.full_name, COUNT(*) AS max_count FROM animals INNER JOIN owners on animals.owner_id = owners.id GROUP BY owners.full_name ORDER BY max_count DESC LIMIT 1;
+
+/*  DATABASE PERFORMANCE OPTIMIZATION */
+EXPLAIN ANALYSE SELECT COUNT(*) FROM visits where animal_id = 4;
+
+EXPLAIN ANALYSE SELECT * FROM visits where vet_id = 2;
+
+
+EXPLAIN ANALYSE SELECT id, visit_date, vet_id, animal_id FROM visits where vet_id = 2 LIMIT 100;
+
+
+
+/* 
+Finalize Aggregate  (cost=116755.03..116755.04 rows=1 width=8) (actual time=23798.658..23935.017 rows=1 loops=1)
+   ->  Gather  (cost=116754.81..116755.02 rows=2 width=8) (actual time=23798.050..23934.990 rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Partial Aggregate  (cost=115754.81..115754.82 rows=1 width=8) (actual time=23573.824..23573.826 rows=1 loops=3)
+               ->  Parallel Seq Scan on visits  (cost=0.00..114621.71 rows=453240 width=0) (actual time=1749.819..23530.598 rows=359428 loops=3)
+                     Filter: (animal_id = 4)
+                     Rows Removed by Filter: 3234852
+ Planning Time: 15.166 ms
+ JIT:
+   Functions: 14
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 50.022 ms, Inlining 0.000 ms, Optimization 569.032 ms, Emission 4487.899 ms, Total 5106.953 ms
+ Execution Time: 25750.432 ms
+
+ */

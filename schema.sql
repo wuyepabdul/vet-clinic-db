@@ -5,6 +5,8 @@ CREATE TABLE animals (id INT GENERATED ALWAYS AS IDENTITY, name VARCHAR(100), da
 --Create a table named owners with the following columns:
 CREATE TABLE owners (id SERIAL NOT NULL PRIMARY KEY, full_name VARCHAR(100), age INT);
 
+CREATE TABLE visits (id SERIAL NOT NULL PRIMARY KEY, visit_date DATE, vet_id INT, animal_id INT);
+
 -- Create a table named species with the following columns
 CREATE TABLE species (id SERIAL NOT NULL PRIMARY KEY, name VARCHAR(100));
 
@@ -21,3 +23,12 @@ ALTER TABLE animals ADD COLUMN owner_id INT;
 ALTER TABLE animals ADD FOREIGN KEY (species_id) REFERENCES species(id);
 ALTER TABLE animals ADD FOREIGN KEY (owner_id) REFERENCES owners(id);
 
+/* 
+database performance audit
+*/
+-- Add an email column to your owners table
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+
+CREATE INDEX visit_id_asc ON visits(id ASC);
+CREATE INDEX visit_date_dsc ON visits(visit_date DESC);
